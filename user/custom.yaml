@@ -6,6 +6,8 @@ Normal:
   ':':
   - mode3
   A:
+  - release right shift
+  - release shift
   - end
   - mode1
   D:
@@ -14,6 +16,8 @@ Normal:
   - ctrl+c
   - backspace
   I:
+  - release right shift
+  - release shift
   - home
   - mode1
   Y:

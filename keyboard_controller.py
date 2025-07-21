@@ -1,8 +1,8 @@
 import keyboard
 from tool import *
 from data_controller import DataController
-import sys
 import threading
+import time
 
 
 @singleton
@@ -86,7 +86,11 @@ class KeyboardController():
             keyboard.unhook(id)
         print("unhook complete")
 
+
     #normal mode와 visual mode에서의 키 바인딩
+    #remap 함수에서 custom.yaml를 디코드하느라 볼륨이 커지고 있음. 분리시켜야 함.
+    #decode.py 모듈에서 decoder 객체를 생성해야 할듯듯
+
     def remap_key(self):
         self.isRemapOn = True
         def remap(event):
@@ -116,7 +120,24 @@ class KeyboardController():
                             self.mode = 1
                             self.window.change_mode(1)
                             self.unhook_all()
-                            
+
+                    #시간지연
+                    elif code[0:5] == "sleep":
+                        sleep_time = float(code[6:-1])
+                        time.sleep(sleep_time)
+
+                    #키차단
+                    elif code[0:5] == "block":
+                        keyboard.block_key(code[6:])
+                    
+                    #키차단해제
+                    elif code[0:7] == "unblock":
+                        keyboard.unblock_key(code[8:])
+
+                    #키 떼기
+                    elif  code[0:7] == "release":
+                        keyboard.release(code[8:])
+
                     else:
                         keyboard.send(code)
 
@@ -124,40 +145,3 @@ class KeyboardController():
             id = keyboard.on_press_key(key,remap,suppress=True)
             self.hook_list.append(id)
         print("[Key Remapping Started in Thread]")
-"""
-@singleton
-class KeyboardContoroller():
-    def __init__(self,data_controller):
-    
-        self.key_data = data_controller.get_custom_key_data()
-
-        # Normal = 0, Insert = 1, Visual = 2
-        self.mode = 0
-
-
-        self.keymap = self.key_data["Normal"] | self.key_data["Insert"]
-    
-    def key_decoder(self,key):
-        for code in self.keymap[key]:
-            print(code)
-            if code[0:4] == 'mode':
-                self.mode = code[-1]
-                #mode change 코드 필요
-            else:
-                keyboard.send(code)
-
-    def remap_key(self):
-
-        #initialize
-        keyboard.unhook_all()
-
-        def remap(event):
-
-            if event.name in self.keymap and event.event_type == 'down':
-                self.key_decoder(event.name)
-
-        for key in self.keymap:
-            keyboard.on_press_key(key, remap, suppress=True)
-
-        print("[Key Remapping Started in Thread]")
-"""  
