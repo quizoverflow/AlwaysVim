@@ -5,6 +5,7 @@ pip install yaml
 pip install tk  
 pip install keyboard  
 
+버그 투성이임. 아직 쓰면안됨
 conda 패키지에는 일부 패키지가 이미 설치되어있거나, conda 채널에는 없는 패키지일 수 있습니다.
 
 ### 실행
