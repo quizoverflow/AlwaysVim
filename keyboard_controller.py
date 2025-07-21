@@ -11,7 +11,7 @@ class KeyboardController():
         self.key = None
         self.custom = custom
         self.window = window
-        self.isRemapOn = False
+        self.isRemapOn = True
         self.mode = 0
         self.label_text = ""
         self.command = []
@@ -29,6 +29,7 @@ class KeyboardController():
         """
         self.mode_list = [self.normal_mode,self.insert_mode,self.visual_mode,self.command_mode]
 
+        self.remap_key()
         key_listener_thread = threading.Thread(target= self.key_listener,daemon=True)
         key_listener_thread.start()
 
