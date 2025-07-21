@@ -1,0 +1,42 @@
+Geometry: 300x20+158+702
+Insert:
+  esc:
+  - mode0
+Normal:
+  ':':
+  - mode3
+  A:
+  - end
+  - mode1
+  D:
+  - end
+  - shift+home
+  - ctrl+c
+  - backspace
+  I:
+  - home
+  - mode1
+  Y:
+  - end
+  - shift+home
+  - ctrl+c
+  a:
+  - mode1
+  d:
+  - backspace
+  h:
+  - left
+  i:
+  - mode1
+  j:
+  - down
+  k:
+  - up
+  l:
+  - right
+  p:
+  - ctrl+v
+  v:
+  - mode2
+  y:
+  - ctrl+c
