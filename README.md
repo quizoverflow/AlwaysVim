@@ -1,4 +1,4 @@
-#AlwaysVim Beta 0.1
+# AlwaysVim Beta 0.1
 ## 워드프로세서에도 vim 쓰고 싶어서 만든 거지같은 프로그램
 ### 필요 파이썬 패키지
 pip install yaml
