@@ -16,7 +16,7 @@ class KeyboardController():
         self.label_text = ""
         self.command = []
         self.normal_keymap = self.custom["Normal"]
-
+        self.visual_keymap = self.custom["Visual"]
         #후킹된 키 관리. 언훅에 필요함
         self.hook_list = []
 
@@ -67,8 +67,6 @@ class KeyboardController():
         if self.key == self.normal_key:
             self.mode = 1
             self.window.change_mode(0)
-        keyboard.release("shift")
-        keyboard.release("left")
 
     def command_mode(self):
         pass
@@ -90,6 +88,41 @@ class KeyboardController():
     #normal mode와 visual mode에서의 키 바인딩
     #remap 함수에서 custom.yaml를 디코드하느라 볼륨이 커지고 있음. 분리시켜야 함.
     #decode.py 모듈에서 decoder 객체를 생성해야 할듯듯
+    def remap_key_visual(self):
+
+        def remap(event):
+            if event.event_type == 'down':
+                for code in self.visual_keymap[event.name]:
+                    #모드 변경 (normal mode로 단방향)
+                    if code[0:5] == "mode0":
+                        self.mode = 0
+                        self.unhook_all()
+                        #블럭 해제
+                        keyboard.send("right")
+                    #시간지연
+                    # elif code[0:5] == "sleep":
+                    #     sleep_time = float(code[6:-1])
+                    #     time.sleep(sleep_time)
+
+                    #키차단
+                    # elif code[0:5] == "block":
+                        # keyboard.block_key(code[6:])
+                    
+                    #키차단해제
+                    # elif code[0:7] == "unblock":
+                    #     keyboard.unblock_key(code[8:])
+
+                    #키 떼기
+                    # elif code[0:7] == "release":
+                    #     keyboard.release(code[8:])
+                    else:
+                        keyboard.send(code)
+
+        for key in self.normal_keymap:
+            id = keyboard.on_press_key(key,remap,suppress=True)
+            self.hook_list.append(id)
+        print("[Visual Key Remapping Started in Thread]")
+
 
     def remap_key(self):
         self.isRemapOn = True
@@ -103,17 +136,12 @@ class KeyboardController():
                             self.mode = 3
                             self.isRemapOn = False
                             self.unhook_all()
-                        #normal -> visual , visual -> normal (normal모드에서만 진입가능함)
+                        #normal -> visual
                         elif code[-1] == "2":
-                            if self.mode == 0:
-                                self.mode = 2
-                                self.window.change_mode(2)
-                                keyboard.press("shift")
-                            else:
-                                self.mode = 0
-                                self.window.change_mode(0)
-                                keyboard.release("shift")
-                                keyboard.send("left") # 블럭해제
+                            self.mode = 2
+                            self.window.change_mode(2)
+                            self.unhook_all()
+                            self.remap_key_visual()
                                 
                         #insert mode
                         elif code[-1] == "1":
@@ -135,7 +163,7 @@ class KeyboardController():
                         keyboard.unblock_key(code[8:])
 
                     #키 떼기
-                    elif  code[0:7] == "release":
+                    elif code[0:7] == "release":
                         keyboard.release(code[8:])
 
                     else:

@@ -1,11 +1,11 @@
-# AlwaysVim Beta 0.1
+# AlwaysVim
 ## 워드프로세서에도 vim 쓰고 싶어서 만든 거지같은 프로그램
 ### 필요 파이썬 패키지
 pip install yaml  
 pip install tk  
 pip install keyboard  
 
-버그 투성이임. 아직 쓰면안됨
+버그 투성이. 아직 쓸게 못됨
 conda 패키지에는 일부 패키지가 이미 설치되어있거나, conda 채널에는 없는 패키지일 수 있습니다.
 
 ### 실행

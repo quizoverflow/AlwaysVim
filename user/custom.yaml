@@ -44,3 +44,16 @@ Normal:
   - mode2
   y:
   - ctrl+c
+Visual:
+  esc:
+  - mode0
+  h:
+  - left
+  j:
+  - down
+  k:
+  - up
+  l:
+  - right
+  v:
+  - mode0
