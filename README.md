@@ -1,4 +1,9 @@
-# MSVC 빌드
+# Use Vim Anywhere!
+---
+vim 을 지원하지 않는 환경 (워드 등)에서도 vim을 쓸 수 있게 도와주는 프로그램
+Codex GPT 6.1 Terra 이용하여 제작
+
+### MSVC 빌드
 
 Visual Studio의 **x64 Native Tools Command Prompt**에서 이 폴더로 이동한 뒤 실행합니다.
 
